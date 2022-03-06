@@ -14,14 +14,14 @@ from pymongo import MongoClient
 import dns
 
 # Usiamo pymongo come driver verso mongoDB 
-client = pymongo.MongoClient("mongodb+srv://capanokevin:1234@cluster0.u1mid.mongodb.net/DataMan?retryWrites=true&w=majority")
-db = client.DataMan
-users = db.users
+client = pymongo.MongoClient("mongodb+srv://yourmongodbprofile:yourpassword@cluster0.u1mid.mongodb.net/DataMan?retryWrites=true&w=majority")
+db = client.yourdb
+users = db.yourcollection
 
 # COMANDI UTILI
-# result = users.delete_many({}) #elimina tutti i record della collezione
-# result = users.insert_one(documento)
-# result = users.insert_many(dizionario di dizionari)
+# result = yourcollection.delete_many({}) #elimina tutti i record della collezione
+# result = yourcollection.insert_one(documento)
+# result = yourcollection.insert_many(dizionario di dizionari)
 
 # Una volta messo il file json qui su server, lo mando diretto su mongo ... in realtà bisognerebbe mandarli uno a uno o in blocco ma qui possiamo
 # permetterci questo ...
@@ -31,7 +31,7 @@ with open('/content/sample_data/json.json') as f:
     for line in f:
         data.append(json.loads(line))
 
-result = users.insert_many(data)
+result = yourcollection.insert_many(data)
 
 """# Scopus API acquisition ... after a hundred attempts ..."""
 
@@ -92,7 +92,7 @@ def get_affiliation_history(author):
     for idx, row in enumerate(pubs['coverDate']):
         pubs['Year'][idx] = row.year
 
-cursor = users.find()
+cursor = yourcollection.find()
 for post in cursor[0:1]:
     post_queries = get_query_list(post)    # ottengo la lista di query
     name = get_author_name(post)
